@@ -98,4 +98,41 @@ instacart |>
 ```
 
 ## Problem 2
+```{r}
+data("brfss_smart2010")
+
+brfss_smart = 
+  brfss_smart2010 |> 
+  as_tibble()
+```
+
+First, do some data cleaning:
+
+* format the data to use appropriate variable names;
+* focus on the “Overall Health” topic
+* include only responses from “Excellent” to “Poor”
+* organize responses as a factor taking levels ordered from “Poor” to “Excellent”
+
+```{r}
+brfss_smart = 
+  brfss_smart |>
+  filter(Topic %in% "Overall Health") |>
+  filter(Response %in% c("Excellent","Poor")) |>
+  group_by(Response) |>
+  mutate(Response = fct_reorder("Poor", "Excellent")) |>view()
+```
+
+In 2002, which states were observed at 7 or more locations? What about in 2010?
+
+```{r}
+brfss_smart |>
+  group_by(Year,Locationabbr) |>
+  count(Locationabbr) |>
+  filter(n >= 7) |>
+  summarize(Year = c("2002","2010")) |>
+  pivot_wider(
+    names_from = Year, 
+    values_from = Locationabbr) |>
+  knitr::kable()
+```
 
