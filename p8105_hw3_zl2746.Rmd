@@ -218,7 +218,7 @@ nhanes_accel =
 nhanes_df = left_join(nhanes_covar,nhanes_accel,by = "seqn")
 ```
 
-### Produce a reader-friendly table for the number of men and women in each education category, and create a visualization of the age distributions for men and women in each education category. Comment on these items.
+### Produce a reader-friendly table for the number of men and women in each education category, and create a visualization of the age distributions for men and women in each education category. 
 
 ```{r}
 nhanes_df |>
@@ -243,7 +243,11 @@ nhanes_df |>
   )
 ```
 
-### Using your tidied dataset, aggregate across minutes to create a total activity variable for each participant. Plot these total activities (y-axis) against age (x-axis); your plot should compare men to women and have separate panels for each education level. Include a trend line or a smooth to illustrate differences. Comment on your plot.
+Comment on these items.
+
+
+
+### Using your tidied dataset, aggregate across minutes to create a total activity variable for each participant. Plot these total activities (y-axis) against age (x-axis); your plot should compare men to women and have separate panels for each education level. Include a trend line or a smooth to illustrate differences. 
 
 ```{r}
 nhanes_df |>
@@ -255,9 +259,21 @@ nhanes_df |>
   facet_grid(. ~ education)
 ```
 
+Comment on your plot.
+
+
+
 ### Accelerometer data allows the inspection activity over the course of the day. Make a three-panel plot that shows the 24-hour activity time courses for each education level and use color to indicate sex. Describe in words any patterns or conclusions you can make based on this graph; including smooth trends may help identify differences.
 
 ```{r}
-
+nhanes_df |>
+  mutate(
+    minutes = str_remove_all(minutes,"min"),
+    minutes = as.numeric(minutes)
+  ) |>
+  ggplot(aes(x = minutes, y = MIMS_Value, color = sex)) +
+  geom_point(alpha = .5) +
+  geom_smooth(se = FALSE) +
+  facet_grid(. ~ education) 
 ```
 
