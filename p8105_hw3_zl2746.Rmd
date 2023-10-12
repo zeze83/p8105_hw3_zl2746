@@ -159,10 +159,13 @@ brfss_smart |>
   filter(response == "Excellent") |>
   group_by(year,state) |>
   summarize(mean_datavalue = mean(data_value)) |> 
-  ggplot(aes(x = year, y = mean_datavalue, color = state)) + 
+  ggplot(aes(x = year, y = mean_datavalue, group = state, color = state)) + 
   geom_line() + 
-  labs(title = "Time vs Mean Data Value") + 
-  theme(legend.position = "left")
+  labs(
+    title = "Time vs Mean Data Value",
+    x = "Year",
+    y = "Average Data Value") + 
+  theme(legend.position = "right")
 ```
 
 ### Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
@@ -179,5 +182,25 @@ brfss_smart |>
     y = "Data Value",
     title = "Data Value vs Response"
   )
+```
+
+## Problem 3
+
+* Your final dataset should include all originally observed variables; 
+
+* exclude participants less than 21 years of age, and those with missing demographic data; 
+
+* and encode data with reasonable variable classes (i.e. not numeric, and using factors with the ordering of tables and plots in mind).
+
+```{r}
+nhanes_df = 
+  read_csv("nhanes_covar.csv",skip = 4) |>
+  janitor::clean_names() |>
+  filter(age > 21) |>
+  mutate(
+    sex = recode(sex, "1" = "male", "2" = "female"),
+    education = recode(education, "1" = "Less than high shcool", "2" = "High school equivalent","3" = "More than high school")
+  ) |>
+  drop_na()
 ```
 
