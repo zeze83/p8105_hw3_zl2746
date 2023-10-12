@@ -211,8 +211,8 @@ nhanes_accel =
   janitor::clean_names() |>
   pivot_longer(
     min1:min1440,
-    values_to = "minutes",
-    names_to = "MIMS Value"
+    values_to = "MIMS_Value",
+    names_to = "minutes"
   )
 
 nhanes_df = left_join(nhanes_covar,nhanes_accel,by = "seqn")
@@ -246,8 +246,18 @@ nhanes_df |>
 ### Using your tidied dataset, aggregate across minutes to create a total activity variable for each participant. Plot these total activities (y-axis) against age (x-axis); your plot should compare men to women and have separate panels for each education level. Include a trend line or a smooth to illustrate differences. Comment on your plot.
 
 ```{r}
-
+nhanes_df |>
+  group_by(seqn) |>
+  mutate(aggr_act = sum(MIMS_Value)) |>
+  ggplot(aes(x = age, y = aggr_act, color = sex)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  facet_grid(. ~ education)
 ```
 
 ### Accelerometer data allows the inspection activity over the course of the day. Make a three-panel plot that shows the 24-hour activity time courses for each education level and use color to indicate sex. Describe in words any patterns or conclusions you can make based on this graph; including smooth trends may help identify differences.
+
+```{r}
+
+```
 
