@@ -114,8 +114,7 @@ brfss_smart =
   janitor::clean_names() |>
   rename(state = locationabbr, location_state = locationdesc) |>
   filter(topic %in% "Overall Health") |>
-  mutate(response = fct_relevel(response, "Poor","Fair","Good","Very good","Excellent")) |>
-  filter(response %in% c("Poor","Excellent")) 
+  mutate(response = fct_relevel(response, "Poor","Fair","Good","Very good","Excellent")) 
 ```
 
 ### In 2002, which states were observed at 7 or more locations? What about in 2010?
