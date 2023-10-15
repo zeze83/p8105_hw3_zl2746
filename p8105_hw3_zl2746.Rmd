@@ -162,7 +162,8 @@ brfss_smart |>
     title = "Time vs Mean Data Value",
     x = "Year",
     y = "Average Data Value") + 
-  theme(legend.position = "right")
+  theme(legend.position = "right") 
+ggsave("Time vs Mean Data Value Line Plot.pdf")
 ```
 
 ### Make a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
@@ -179,6 +180,7 @@ brfss_smart |>
     y = "Data Value",
     title = "Data Value vs Response"
   )
+ggsave("Data Value vs Response Boxplot.pdf")
 ```
 
 In 2006, Poor response has the least median around 3 data value, then is Fair response has a median at 13, then is Excellent has a median around 21. In addition, Good and Very Good response has a median each round 30 and 32.
@@ -246,6 +248,7 @@ nhanes_df |>
     y = "Age",
     x = "Education"
   )
+ggsave("Age Distribution for Sex in Education Category Boxplot.pdf")
 ```
 
 Comment on these items:
@@ -269,10 +272,11 @@ nhanes_df |>
   geom_smooth(se = FALSE) +
   facet_grid(. ~ education) +
   labs(
-    title = "Total activity vs Age for education level",
+    title = "Total activity vs Age for Education Level",
     x = "Age",
     y = "Total Activity"
   )
+ggsave("Total activity vs Age for Education Level Scatter Plot.pdf")
 ```
 
 Comment on your plot:
@@ -297,5 +301,6 @@ nhanes_df |>
   geom_point(alpha = .5) +
   geom_smooth(se = FALSE) +
   facet_grid(. ~ education) 
+ggsave("24-hour Activity Scatter Plot.pdf")
 ```
 
